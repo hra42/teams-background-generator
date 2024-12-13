@@ -47,7 +47,6 @@ class VertexClient:
         model_path: str,
         raw: bool = False,
         aspect_ratio: str = "1:1",
-        output_format: str = "png",
         safety_tolerance: int = 1,
         image_prompt_strength: float = 0.1,
         number_of_images: int = 1
@@ -60,7 +59,6 @@ class VertexClient:
             model_path (str): Model identifier (imagen-3.0-generate-001 or imagen-3.0-fast-generate-001)
             raw (bool): Not used in Vertex AI
             aspect_ratio (str): One of "1:1", "16:9", "9:16", "4:3", "3:4"
-            output_format (str): Either "png" or "jpeg"
             safety_tolerance (int): Not used - fixed to block_only_high
             image_prompt_strength (float): Not used in Vertex AI
             number_of_images (int): Number of images to generate (1-8 for imagen-3.0, 1-4 for others)
@@ -87,7 +85,7 @@ class VertexClient:
                 # Access the image bytes directly
                 image_bytes = generated_image._image_bytes
                 base64_image = base64.b64encode(image_bytes).decode('utf-8')
-                urls.append(f"data:image/{output_format};base64,{base64_image}")
+                urls.append(f"data:image/png;base64,{base64_image}")
 
             return {
                 'status': 'success',
@@ -96,7 +94,6 @@ class VertexClient:
                 'metadata': {
                     'prompt': prompt,
                     'aspect_ratio': aspect_ratio,
-                    'output_format': output_format,
                     'number_of_images': number_of_images,
                     'model': model_path,
                     'safety_filter': "block_only_high",

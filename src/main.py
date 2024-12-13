@@ -175,19 +175,24 @@ async def main():
                         model_path=model_path,
                         raw=raw,
                         aspect_ratio=aspect_ratio,
-                        output_format=output_format,
                         safety_tolerance=safety_tolerance,
                         image_prompt_strength=image_prompt_strength
                     )
 
                 if result.get('status') == 'success':
-                    # Store the result in session state
+                    # Store the result in session state with appropriate format
+                    if service == "vertex":
+                        format = "png"  # Vertex AI always returns PNG
+                    else:
+                        format = output_format
+
                     st.session_state.generated_images = [{
                         'url': url,
-                        'format': output_format,
+                        'format': format,
                         'metadata': result.get('metadata', {}),
                         'service': service
                     } for url in result.get('urls', [])]
+
         except Exception as e:
             st.error(f"Error: {str(e)}")
             return
