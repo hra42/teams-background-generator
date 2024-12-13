@@ -1,0 +1,25 @@
+services:
+  teams-background-generator:
+    build: .
+    container_name: teams-background-generator
+    restart: always
+    volumes:
+      - ./YOUR_CREDENTIALS.json:/app/google-credentials.json:ro
+    ports:
+      - "8501:8501"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/google-credentials.json
+      - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
+      - GOOGLE_LOCATION=${GOOGLE_LOCATION}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+    networks:
+      - teams-background-generator-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  teams-background-generator-network:
+    driver: bridge

@@ -1,0 +1,13 @@
+# Core
+streamlit
+python-dotenv
+replicate
+requests
+
+# Async support
+asyncio
+
+# Google Cloud
+google-cloud-aiplatform
+vertexai
+Pillow  # Add this line

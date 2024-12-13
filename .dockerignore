@@ -1,0 +1,16 @@
+# .dockerignore
+.git
+.gitignore
+.env
+*.pyc
+__pycache__
+.pytest_cache
+tests/
+venv/
+ENV/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+README.md
+teams-background-generator-334e44892542.json
