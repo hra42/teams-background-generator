@@ -14,6 +14,14 @@ class Config:
     GOOGLE_LOCATION = os.getenv('GOOGLE_LOCATION', 'us-central1')  # Default to us-central1
     GOOGLE_CREDENTIALS_BASE64 = os.getenv('GOOGLE_CREDENTIALS_BASE64')  # New base64 credentials
 
+    # App password protection
+    APP_PASSWORD = os.getenv('APP_PASSWORD')
+    
+    @classmethod
+    def is_password_protected(cls):
+        """Check if password protection is enabled"""
+        return bool(cls.APP_PASSWORD)
+
     @classmethod
     def get_google_credentials(cls):
         """Decode base64 credentials if provided"""

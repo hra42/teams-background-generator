@@ -71,7 +71,28 @@ async def main():
     st.set_page_config(
         page_title="Teams Background Generator",
         page_icon=":camera:",
+        menu_items={
+            "Get Help": "https://github.com/hra42/teams-background-generator/issues/new",
+            "Report a bug": "https://github.com/hra42/teams-background-generator",
+            "About": "https://postrausch.tech"
+        }
     )
+
+    # Initialize password protection
+    if Config.is_password_protected():
+        if 'password_verified' not in st.session_state:
+            st.session_state.password_verified = False
+            
+        if not st.session_state.password_verified:
+            password_input = st.text_input("Enter password:", type="password")
+            if password_input:
+                if password_input == Config.APP_PASSWORD:
+                    st.session_state.password_verified = True
+                    st.rerun()
+                else:
+                    st.error("Incorrect password")
+            return
+
     st.title("Teams Background Generator")
     st.markdown("Generate professional backgrounds for Microsoft Teams using AI")
 

@@ -10,6 +10,8 @@ services:
       - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
       - GOOGLE_LOCATION=${GOOGLE_LOCATION}
       - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      # Optional
+      #- APP_PASSWORD=${APP_PASSWORD}
     networks:
       - teams-background-generator-network
     healthcheck:
