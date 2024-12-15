@@ -21,8 +21,13 @@ def initialize_clients():
     try:
         Config.validate()
         clients['replicate'] = ReplicateClient(api_token=Config.REPLICATE_API_TOKEN)
+        
+        # Get credentials JSON from base64
+        credentials_json = Config.get_google_credentials()
+        
         clients['vertex'] = VertexClient(
             project_id=Config.GOOGLE_PROJECT_ID,
+            credentials_json=credentials_json,
             location=Config.GOOGLE_LOCATION
         )
         return clients

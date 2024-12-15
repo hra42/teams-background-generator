@@ -3,12 +3,10 @@ services:
     build: .
     container_name: teams-background-generator
     restart: always
-    volumes:
-      - ./YOUR_CREDENTIALS.json:/app/google-credentials.json:ro
     ports:
       - "8501:8501"
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/google-credentials.json
+      - GOOGLE_CREDENTIALS_BASE64=${GOOGLE_CREDENTIALS_BASE64}
       - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
       - GOOGLE_LOCATION=${GOOGLE_LOCATION}
       - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}

@@ -1,6 +1,9 @@
 from vertexai.preview.vision_models import ImageGenerationModel
 from typing import Dict, Any, List
 import base64
+import json
+from google.oauth2 import service_account  # Add this import
+import vertexai
 
 class VertexClient:
     # Available Imagen models
@@ -17,15 +20,23 @@ class VertexClient:
         }
     ]
 
-    def __init__(self, project_id: str, location: str = "us-central1"):
+    def __init__(self, project_id: str, credentials_json: str, location: str = "us-central1"):
         """
         Initialize the Vertex AI client.
+        
+        Args:
+            project_id: Google Cloud project ID
+            credentials_json: JSON credentials as string
+            location: Google Cloud location
         """
-        import vertexai
-        vertexai.init(project=project_id, location=location)
+        
+        # Create temporary credentials file
+        credentials_dict = json.loads(credentials_json)
+        credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+        
+        vertexai.init(project=project_id, location=location, credentials=credentials)
         self.project_id = project_id
         self.location = location
-        # Initialize with default model
         self.model = ImageGenerationModel.from_pretrained("imagen-3.0-generate-001")
 
     def get_available_models(self) -> List[Dict[str, str]]:
